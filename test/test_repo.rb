@@ -197,14 +197,8 @@ class TestRepo < Test::Unit::TestCase
   # diff
 
   def test_diff
-    Git.any_instance.expects(:diff).with({}, 'master^', 'master', '--')
+    Git.any_instance.expects(:diff).with({}, 'master^', 'master')
     @r.diff('master^', 'master')
-
-    Git.any_instance.expects(:diff).with({}, 'master^', 'master', '--', 'foo/bar')
-    @r.diff('master^', 'master', 'foo/bar')
-
-    Git.any_instance.expects(:diff).with({}, 'master^', 'master', '--', 'foo/bar', 'foo/baz')
-    @r.diff('master^', 'master', 'foo/bar', 'foo/baz')
   end
 
   # commit_diff
