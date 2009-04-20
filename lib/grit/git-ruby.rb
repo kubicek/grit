@@ -46,23 +46,7 @@ module Grit
     def rev_list(options, ref = 'master')
       options.delete(:skip) if options[:skip].to_i == 0
       allowed_options = [:max_count, :since, :until, :pretty]  # this is all I can do right now
-      if ((options.keys - allowed_options).size > 0)
-        return method_missing('rev-list', options, ref)
-      elsif (options.size == 0)
-        # pure rev-list
-        begin
-          return file_index.commits_from(rev_parse({}, ref)).join("\n") + "\n"
-        rescue
-          return method_missing('rev-list', options, ref) 
-        end
-      else
-        aref = rev_parse({}, ref)
-        if aref.is_a? Array
-          return method_missing('rev-list', options, ref) 
-        else
-          return try_run { ruby_git.rev_list(aref, options) }
-        end
-      end
+      return method_missing('rev-list', options, ref) 
     end
     
     def rev_parse(options, string)
